@@ -52,7 +52,6 @@ begin
 	endcase
 end
 
-/*assign LEDG[0] = (~STATE[1] && STATE[0]);
-assign LEDR[0] = (STATE[1] && STATE[0]);*/
+//Colocar circuito de saída
 
 endmodule
