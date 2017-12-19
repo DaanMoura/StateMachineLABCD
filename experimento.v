@@ -1,15 +1,17 @@
-module PORTA(SW, HEX0, HEX1, KEY[0], LEDG, LEDR); //HEX1 é auxiliar para mostrar na placa em qual estado está
+module Porta(SW, HEX0, HEX1, KEY[0], LEDG, LEDR); //HEX1 é auxiliar para mostrar na placa em qual estado está
 
-//ENTRADAS
-input [2:0]SW; //SW[1]: entrando SW[0]: saindo
-//input CLK; //foi substituido por key[0]
-input [0:0]KEY;
-//input [0:0]KEY; //sensor //foi substituido por SW[2]
+/*ENTRADAS
+**SW[1]: sensor de presença na entrada 
+**SW[0]: sensor de presença na saida
+**SW[2]: sensor de metal*/
+input [2:0]SW; 
+input [0:0]KEY; //Sincronismo
 
 //SAÍDAS
 output reg [0:6]HEX0,HEX1; //Visor para mostrar sentido do giro
 output [0:0]LEDG; //Led verde
 output [1:0] LEDR; //LEDR[1]: luz vermelha e LEDR[0]: sinal soonoro 
+
 reg [2:0]STATE; //estados
 
 //Identificação dos estados
@@ -43,10 +45,8 @@ begin
 		endcase
 end
 
-//no display:
-//0110000 E
-//0000001 D
-
+//Aparece E no display quando o sentido do giro for para esquerda(individuo saindo)
+//Aparece D quando o sentido do giro for para a direita(individuo entrando)
 always @ (STATE)
 begin
 	case(STATE)
@@ -63,18 +63,18 @@ end
 always @ (STATE)
 begin
 	case(STATE)
-		I: HEX1 = 7'b1000000; 
-		A: HEX1 = 7'b0100000;
-		B: HEX1 = 7'b0010000;
-		C: HEX1 = 7'b0001000;
-		D: HEX1 = 7'b0000100;
-		E: HEX1 = 7'b0000010;
+		I: HEX1 = 7'b1001111; 
+		A: HEX1 = 7'b0001000;
+		B: HEX1 = 7'b0000000;
+		C: HEX1 = 7'b0110001;
+		D: HEX1 = 7'b0000001;
+		E: HEX1 = 7'b0110000;
 	endcase
 end
 
-//CIRCUITOS DE SAÍDA - precisa ser arrumado
-assign LEDG[0] = (!STATE[1] & STATE[0]) | (STATE[1] & !STATE[0]); //VERDE 
-assign LEDR[0] = (STATE[1] & STATE[0]) | (STATE[2] & !STATE[0]); //VERMELHO
-assign LEDR[1] = STATE[2] & STATE[0]; //SOM
+//CIRCUITOS DE SAÍDA (foram todos simplificados com o mapa de Karnaugh)
+assign LEDG[0] = (~STATE[1] & STATE[0]) | (STATE[1] & ~STATE[0]); //VERDE 
+assign LEDR[0] = (STATE[1] & STATE[0]) | (STATE[2] & ~STATE[0]); //VERMELHO
+assign LEDR[1] = STATE[2] & ~STATE[0]; //SOM
 
 endmodule
