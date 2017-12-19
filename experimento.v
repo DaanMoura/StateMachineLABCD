@@ -5,7 +5,8 @@ input CLK;
 input [0:0]KEY; //sensor
 
 output reg [6:0]HEX0; //Visor para mostrar sentido do giro
-output [0:0]LEDG, LEDR; //Led verde, led vermelho
+output [0:0]LEDG; //Led verde
+output [1:0] LEDR; //LEDR[1]: luz vermelha e LEDR[0]: sinal soonoro 
 reg [1:0]STATE; //estados
 
 parameter I = 3'b000, A = 3'b001, B = 3'b010, C = 3'b011, D = 3'b100, E = 3'101;
@@ -53,6 +54,8 @@ begin
 	endcase
 end
 
-//Colocar circuito de saída
+assign LEDG[0] = (!STATE[1] & STATE[0]) | (STATE[1] & !STATE[0]); //VERDE 
+assign LEDR[0] = (SATATE[1] & STATE[0]) | (STATE[2] & !STATE[0]); //VERMELHO
+assign LEDR[1] = STATE[2] & STATE[0] //SOM
 
 endmodule
