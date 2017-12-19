@@ -2,13 +2,13 @@ module experimento(CLK, SW, HEX0, KEY[0], LEDG, LEDR);
 
 input [1:0]SW; //SW[1]: entrando SW[0]: saindo
 input CLK;
-input [0:0]KEY;
+input [0:0]KEY; //sensor
 
-output reg [6:0]HEX0;
-output [0:0]LEDG, LEDR;
-reg [1:0]STATE;
+output reg [6:0]HEX0; //Visor para mostrar sentido do giro
+output [0:0]LEDG, LEDR; //Led verde, led vermelho
+reg [1:0]STATE; //estados
 
-parameter I = 3'b000, A = 3'b001, B = 3'b010, C = 3'b011, D = 3'b100, E = 3'101, F = 3'110;
+parameter I = 3'b000, A = 3'b001, B = 3'b010, C = 3'b011, D = 3'b100, E = 3'101;
 
 initial STATE = S;
 always @(posedge CLK)
