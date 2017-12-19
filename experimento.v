@@ -32,7 +32,7 @@ begin
 		 else STATE <= D;
 		 
 		 E: if(SW[1] == 0 && SW[0] == 0) STATE <= I;
-		 else STATE <= D;
+		 else STATE <= E;
 		 
 		endcase
 end
