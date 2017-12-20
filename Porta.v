@@ -51,11 +51,11 @@ always @ (STATE)
 begin
 	case(STATE)
 		I: HEX0 = 7'b1111111;
-		A: HEX0 = 7'b0000001;
+		A: HEX0 = 7'b1000010;
 		B: HEX0 = 7'b0110000;
 		C: HEX0 = 7'b1111111;
 		D: HEX0 = 7'b1111111;
-		E: HEX0 = 7'b0000001;
+		E: HEX0 = 7'b1000010;
 	endcase
 end
 
@@ -65,9 +65,9 @@ begin
 	case(STATE)
 		I: HEX1 = 7'b1001111; 
 		A: HEX1 = 7'b0001000;
-		B: HEX1 = 7'b0000000;
+		B: HEX1 = 7'b1100000;
 		C: HEX1 = 7'b0110001;
-		D: HEX1 = 7'b0000001;
+		D: HEX1 = 7'b1000010;
 		E: HEX1 = 7'b0110000;
 	endcase
 end
